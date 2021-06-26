@@ -119,6 +119,7 @@ class Materials extends Component {
 		return (
 			<div>
 				<h1>Materials</h1>
+				<h3>Note: Database write permissions are turned off</h3>
 
 				<div className={classes.table}>
 					<table>
