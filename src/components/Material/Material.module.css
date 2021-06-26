@@ -1,0 +1,28 @@
+
+  
+  th, td {
+    padding: .5rem 10px;
+    border: 1px solid black;
+    text-align: left;
+  }
+  
+  th {
+    /* height: auto; */
+    /* max-height: 10px;
+    max-width: 200px; */
+    /* overflow-y: hidden; */
+    background: #e6e6e6;
+    color: #4D4D4D;
+    font-size: 14px;
+    overflow-x: auto;
+  }
+  
+  td {
+    font-size: 13px;
+  }
+
+
+  
+  .calculatedTableField {
+    background-color: #89c3f5;
+  }
