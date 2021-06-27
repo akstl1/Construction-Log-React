@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import classes from './materials.module.css';
 import Material from '../../components/Material/Material';
-import Header from '../../components/tableHeader/tableHeader';
+import Header from '../../components/materialHeader/materialHeader';
 import axios from '../../axios';
 import MaterialButton from '../../components/Buttons/MaterialButton/MaterialButton';
 

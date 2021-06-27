@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import classes from './submittals.module.css';
-import Material from '../../components/Material/Material';
-import Header from '../../components/tableHeader/tableHeader';
+import Submittal from '../../components/Submittal/Submittal';
+import Header from '../../components/submittalHeader/submittalHeader';
 import axios from '../../axios';
 import MaterialButton from '../../components/Buttons/MaterialButton/MaterialButton';
 
@@ -17,7 +17,7 @@ class Submittals extends Component {
 			const submittals = response.data;
 			const submittalList = [];
 			for (var key in submittals) {
-				submittals[key].material_id = key;
+				submittals[key].submittal_id = key;
 				submittals[key].key = key;
 				submittalList.push(submittals[key]);
 			}
@@ -28,33 +28,26 @@ class Submittals extends Component {
 
 	createButtonHandler = () => {
 		const newSubmittal = {
-			material_id: '',
-			item: '',
-			specSection: '',
-			responsibleSubcontractor: '',
-			submittals: [ 1, 2 ],
-			anticipatedReleaseDate: '',
-			actualReleaseDate: '',
-			buyoutVariance: '',
-			submittalPrepTime: 7,
-			requiredSubmissionDate: '',
-			requestedSubmittal: '',
-			ancitipcatedSubmissionDate: '',
-			actualSubmissionDate: '',
-			submittalVariance: '',
-			approvalTime: 14,
-			requiredApprovalDate: '',
-			anticipatedApprovalDate: '',
-			actualApprovalDate: '',
-			approvalVariance: '',
-			leadTime: '',
-			requiredOnSite: '',
-			anticipatedDeliveryDate: '',
-			confirmedDeliveryDate: '',
-			confirmedSubWarehouse: '',
-			actualDeliveryDate: '',
-			deliveryVariance: '',
-			Notes: ''
+			submittalTitle: '',
+			submittal_id: '',
+			specSection: 1,
+			specSectionDescription: '',
+			submittalNumber: '',
+			submittalDescription: '',
+			submittalMaterialImpacted: [ 'material1', 'material2' ],
+			submittalResponsibleContractor: '',
+			submittalManager: '',
+			submittalStatus: '',
+			submittalType: '',
+			submittalLocation: '',
+			submittalReceivedDate: '',
+			submittalIssuedDate: '',
+			submittalSubmitByDate: '',
+			submittalRequiredOnSiteDate: '',
+			submittalLeadTime: '',
+			submittalDesignReviewTime: 14,
+			submittalInternalReviewTime: 7,
+			submittalNotes: ''
 		};
 
 		const currentSubmittals = [ ...this.state.submittals, newSubmittal ];
@@ -67,7 +60,7 @@ class Submittals extends Component {
 		const currentSubmittals = this.state.submittals;
 		console.log('hit');
 		this.setState({
-			submittals: currentSubmittals.filter((submittal) => submittal.material_id !== id)
+			submittals: currentSubmittals.filter((submittal) => submittal.submittal_id !== id)
 		});
 
 		axios
@@ -76,12 +69,12 @@ class Submittals extends Component {
 				console.log(response);
 			})
 			.catch((err) => {
-				err.json();
+				// err.json();
 				console.log(err);
 			});
 	};
 
-	materialChangeHandler = (event, id, val) => {
+	submittalChangeHandler = (event, id, val) => {
 		const newValue = event.target.value;
 
 		axios.patch('/submittals/' + id + '.json', { [val]: newValue }).then((response) => {
@@ -89,7 +82,7 @@ class Submittals extends Component {
 				const submittals = response.data;
 				const submittalList = [];
 				for (var key in submittals) {
-					submittals[key].material_id = key;
+					submittals[key].submittal_id = key;
 					submittals[key].key = key;
 					submittalList.push(submittals[key]);
 				}
@@ -102,37 +95,31 @@ class Submittals extends Component {
 	render() {
 		const Submittal_list = this.state.submittals.map((submittal) => {
 			return (
-				<Material
-					key={submittal.material_id}
-					material_id={submittal.material_id}
-					item={submittal.item}
+				<Submittal
+					key={submittal.submittal_id}
+					submittal_id={submittal.submittal_id}
+					submittalTitle={submittal.submittalTitle}
 					specSection={submittal.specSection}
-					responsibleSubcontractor={submittal.responsibleSubcontractor}
-					submittals={submittal.submittals}
-					anticipatedReleaseDate={submittal.anticipatedReleaseDate}
-					actualReleaseDate={submittal.actualReleaseDate}
-					buyoutVariance={submittal.buyoutVariance}
-					submittalPrepTime={submittal.submittalPrepTime}
-					requiredSubmissionDate={submittal.requiredSubmissionDate}
-					requestedSubmittal={submittal.requestedSubmittal}
-					ancitipcatedSubmissionDate={submittal.ancitipcatedSubmissionDate}
-					actualSubmissionDate={submittal.actualSubmissionDate}
-					submittalVariance={submittal.submittalVariance}
-					approvalTime={submittal.approvalTime}
-					requiredApprovalDate={submittal.requiredApprovalDate}
-					anticipatedApprovalDate={submittal.anticipatedApprovalDate}
-					actualApprovalDate={submittal.actualApprovalDate}
-					approvalVariance={submittal.approvalVariance}
-					leadTime={submittal.leadTime}
+					specSectionDescription={submittal.specSectionDescription}
+					submittalNumber={submittal.submittalNumber}
+					submittalDescription={submittal.submittalDescription}
+					submittalMaterialImpacted={submittal.submittalMaterialImpacted}
+					submittalResponsibleContractor={submittal.submittalResponsibleContractor}
+					submittalManager={submittal.submittalManager}
+					submittalStatus={submittal.submittalStatus}
+					submittalType={submittal.submittalType}
+					submittalLocation={submittal.submittalLocation}
+					submittalReceivedDate={submittal.submittalReceivedDate}
+					submittalIssuedDate={submittal.submittalIssuedDate}
+					submittalSubmitByDate={submittal.submittalSubmitByDate}
+					submittalRequiredOnSiteDate={submittal.submittalRequiredOnSiteDate}
+					submittalLeadTime={submittal.submittalLeadTime}
+					submittalDesignReviewTime={submittal.submittalDesignReviewTime}
+					submittalInternalReviewTime={submittal.submittalInternalReviewTime}
+					submittalNotes={submittal.submittalNotes}
 					requiredOnSite={submittal.requiredOnSite}
-					anticipatedDeliveryDate={submittal.anticipatedDeliveryDate}
-					confirmedDeliveryDate={submittal.confirmedDeliveryDate}
-					confirmedSubWarehouse={submittal.confirmedSubWarehouse}
-					actualDeliveryDate={submittal.actualDeliveryDate}
-					deliveryVariance={submittal.deliveryVariance}
-					notes={submittal.Notes}
 					delete={this.deleteItemHandler}
-					change={this.materialChangeHandler}
+					change={this.submittalChangeHandler}
 				/>
 			);
 		});
