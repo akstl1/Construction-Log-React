@@ -1,70 +1,30 @@
-# Getting Started with Create React App
+# The Problem
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Material tracking is a critical component of construction management. If materials are not approved and procured/delivered on time, projects can face significant schedule delays and cost impacts.
 
-## Available Scripts
+For example, if a general contractor forgets to submit/request delivery for a material and it comes two weeks past the project deadline, the GC may have negative impacts like:
+- extra time by subcontractors to install material. If, say, the labor to install is a two person crew that costs $200/hour, that could be $8,000 for a week's worth of work
+- extra cost for the GC to staff the project, which can be several thousand dollars a week as well
+- possible liquidated damage fees imposed by the owner. These can range from small dollar values of $100-$500 / day to exorbitant values of hunderds of thousands of dollars or more per day
+- damaged relationships with the owner team due to material/project mismanagement
 
-In the project directory, you can run:
+GCs understandably want to avoid the above damages, and do so by creating and managing two documents: material procurement logs and submittal logs.
 
-### `npm start`
+Material procurement logs list out the most important materials on the job, and provide detail about the material such as:
+- Who is responsible for procuring the product
+- When the product is needed on the project site
+- When the product needs to be submitted for architect/owner approval, based on when it is needed and how long review will take
+- Whether the material has been procured, stockpiled and/or delivered
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Submittal logs list out what data needs to be approved by the architect before a given material is bought and installed, the status of these approvals and the date which the submission/approval needs to come by.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Managing the above documents consistently can be the difference between received products on time / finishing on time and facing delays which strain relationships and stress out individual team members. However, often when a project gets under way these material logs do not get updated properly as a team's time is spent on other financial and field-related tasks. Especially on large projects, this can lead to material procurement delays and increased risk to the project overall
 
-### `npm test`
+# Solution
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+This project aims to decrease the risk of procurement mishaps / mistakes by tying together procurement and submittal logs. By identifying which materials are impacted by submittals and vice versa a team can:
+- reduce duplicate data entry in these logs, leading to more managable update processes
+- get a more wholistic view of what is impacting material release in one log, so action items can be more easily seen
+- create logs with more customizable styling to draw attention to the most critical items at the present time
+- create a data archive that can be used to determine which subcontractors, managers, and archtects submit/return items on time so future teams can look for areas to focus on
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
