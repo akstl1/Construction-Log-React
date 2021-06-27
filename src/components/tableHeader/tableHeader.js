@@ -22,11 +22,11 @@ const header = () => {
 			<th className={classes.calculatedTableField}>Submittal Variance (Days)</th>
 			<th>Approval Time (Days)</th>
 			<th className={classes.calculatedTableField}>Required Submittal Approval Date</th>
-			<th>Anticipated Submittal Approval Date</th>
+			<th className={classes.calculatedTableField}>Anticipated Submittal Approval Date</th>
 			<th>Actual Submittal Approval Date</th>
 			<th className={classes.calculatedTableField}>Approval Variance</th>
 			<th>Lead Time</th>
-			<th>Required On Site Date</th>
+			<th className={classes.RequiredOnSite}>Required On Site Date</th>
 			<th className={classes.calculatedTableField}>Anticipated Delivery Date</th>
 			<th>Confirmed Delivery Date</th>
 			<th>Confirmed Sub Warehouse (Y/N)</th>

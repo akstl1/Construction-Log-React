@@ -12,6 +12,7 @@ class Materials extends Component {
 	};
 
 	componentDidMount() {
+		console.log('mount');
 		axios.get('/materials.json').then((response) => {
 			const materials = response.data;
 			const materialList = [];
@@ -23,9 +24,6 @@ class Materials extends Component {
 
 			this.setState({ materials: materialList });
 		});
-		// .catch((error) => {
-		// 	this.setState({ error: true });
-		// })
 	}
 
 	createButtonHandler = () => {
@@ -34,19 +32,28 @@ class Materials extends Component {
 			item: '',
 			specSection: '',
 			responsibleSubcontractor: '',
-			submittals: '',
+			submittals: [ 1, 2 ],
+			anticipatedReleaseDate: '',
 			actualReleaseDate: '',
+			buyoutVariance: '',
 			submittalPrepTime: 7,
+			requiredSubmissionDate: '',
 			requestedSubmittal: '',
+			ancitipcatedSubmissionDate: '',
 			actualSubmissionDate: '',
+			submittalVariance: '',
 			approvalTime: 14,
+			requiredApprovalDate: '',
 			anticipatedApprovalDate: '',
 			actualApprovalDate: '',
+			approvalVariance: '',
 			leadTime: '',
 			requiredOnSite: '',
+			anticipatedDeliveryDate: '',
 			confirmedDeliveryDate: '',
 			confirmedSubWarehouse: '',
 			actualDeliveryDate: '',
+			deliveryVariance: '',
 			Notes: ''
 		};
 
@@ -63,15 +70,20 @@ class Materials extends Component {
 			materials: currentMaterials.filter((material) => material.material_id !== id)
 		});
 
-		axios.delete('/materials/' + id + '.json').then((response) => {
-			// console.log(response);
-		});
+		axios
+			.delete('/materials/' + id + '.json')
+			.then((response) => {
+				console.log(response);
+			})
+			.catch((err) => {
+				err.json();
+				console.log(err);
+			});
 	};
 
 	materialChangeHandler = (event, id, val) => {
 		const newValue = event.target.value;
 
-		console.log(id);
 		axios.patch('/materials/' + id + '.json', { [val]: newValue }).then((response) => {
 			axios.get('/materials.json').then((response) => {
 				const materials = response.data;
@@ -93,22 +105,31 @@ class Materials extends Component {
 				<Material
 					key={material.material_id}
 					material_id={material.material_id}
-					material={material.item}
+					item={material.item}
 					specSection={material.specSection}
-					subcontractor={material.responsibleSubcontractor}
+					responsibleSubcontractor={material.responsibleSubcontractor}
 					submittals={material.submittals}
-					actualRelease={material.actualReleaseDate}
-					prepTime={material.submittalPrepTime}
+					anticipatedReleaseDate={material.anticipatedReleaseDate}
+					actualReleaseDate={material.actualReleaseDate}
+					buyoutVariance={material.buyoutVariance}
+					submittalPrepTime={material.submittalPrepTime}
+					requiredSubmissionDate={material.requiredSubmissionDate}
 					requestedSubmittal={material.requestedSubmittal}
-					actualSubmission={material.actualSubmissionDate}
+					ancitipcatedSubmissionDate={material.ancitipcatedSubmissionDate}
+					actualSubmissionDate={material.actualSubmissionDate}
+					submittalVariance={material.submittalVariance}
 					approvalTime={material.approvalTime}
-					anticipatedApproval={material.anticipatedApprovalDate}
-					actualApproval={material.actualApprovalDate}
+					requiredApprovalDate={material.requiredApprovalDate}
+					anticipatedApprovalDate={material.anticipatedApprovalDate}
+					actualApprovalDate={material.actualApprovalDate}
+					approvalVariance={material.approvalVariance}
 					leadTime={material.leadTime}
 					requiredOnSite={material.requiredOnSite}
-					confirmedDelivery={material.confirmedDeliveryDate}
-					warehouse={material.confirmedSubWarehouse}
-					actualDelivery={material.actualDeliveryDate}
+					anticipatedDeliveryDate={material.anticipatedDeliveryDate}
+					confirmedDeliveryDate={material.confirmedDeliveryDate}
+					confirmedSubWarehouse={material.confirmedSubWarehouse}
+					actualDeliveryDate={material.actualDeliveryDate}
+					deliveryVariance={material.deliveryVariance}
 					notes={material.Notes}
 					delete={this.deleteItemHandler}
 					change={this.materialChangeHandler}
@@ -118,9 +139,10 @@ class Materials extends Component {
 
 		return (
 			<div>
-				<h1>Materials</h1>
-				<h3>Note: Database write permissions are turned off</h3>
-
+				<div className={classes.header}>
+					<h1>Materials</h1>
+					<h3>Note: Database write permissions are turned off</h3>
+				</div>
 				<div className={classes.table}>
 					<table>
 						<thead>
@@ -129,7 +151,7 @@ class Materials extends Component {
 						<tbody>{Material_list}</tbody>
 					</table>
 				</div>
-				<footer>
+				<footer className={classes.footer}>
 					<MaterialButton clicked={this.createButtonHandler} />
 				</footer>
 			</div>

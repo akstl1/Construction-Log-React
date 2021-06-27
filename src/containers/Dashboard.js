@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 // import axios from '../../axios';
 import Home from './home/home';
 import Materials from './materials/materials';
+import Submittals from './submittals/submittals';
+
 import { Route, Link } from 'react-router-dom';
 class Dashboard extends Component {
 	render() {
@@ -16,12 +18,16 @@ class Dashboard extends Component {
 							<li>
 								<Link to="/materials">Materials</Link>
 							</li>
+							<li>
+								<Link to="/submittals">Submittals</Link>
+							</li>
 						</ul>
 					</nav>
 				</header>
 
 				<Route path="/" exact component={Home} />
 				<Route path="/materials" exact component={Materials} />
+				<Route path="/submittals" exact component={Submittals} />
 			</div>
 		);
 	}

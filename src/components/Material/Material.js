@@ -1,7 +1,9 @@
 import React from 'react';
 import classes from './Material.module.css';
+import SubmittalTie from '../SubmittalTie/SubmittalTie';
 const material = (props) => {
 	// console.log(props);
+	const submittalList = props.submittals;
 	return (
 		<tr>
 			<td>
@@ -13,8 +15,8 @@ const material = (props) => {
 			<td>
 				<input
 					onChange={(event) => props.change(event, props.material_id, 'item')}
-					name={props.material}
-					value={props.material}
+					name={props.item}
+					value={props.item}
 					style={{ width: '150px' }}
 				/>
 			</td>
@@ -28,43 +30,55 @@ const material = (props) => {
 			</td>
 			<td>
 				<input
-					value={props.subcontractor}
+					value={props.responsibleSubcontractor}
 					style={{ width: '150px' }}
-					onChange={(event) => props.change(event, props.material_id, 'responsibleSubContractor')}
-					name={props.subcontractor}
+					onChange={(event) => props.change(event, props.material_id, 'responsibleSubcontractor')}
+					name={props.responsibleSubcontractor}
 				/>
 			</td>
-			<td>
-				<input value={props.submittals} />
-			</td>
+			<td>{submittalList.map((submittal) => <SubmittalTie key={submittal} value={submittal} />)}</td>
 			<td className={classes.calculatedTableField}>
-				<input type="date" />
+				<input
+					type="date"
+					value={props.anticipatedReleaseDate}
+					style={{ width: '150px' }}
+					onChange={(event) => props.change(event, props.material_id, 'anticipatedReleaseDate')}
+					name={props.anticipatedReleaseDate}
+				/>
 			</td>
 			<td>
 				<input
 					type="date"
-					value={props.actualRelease}
+					value={props.actualReleaseDate}
 					style={{ width: '150px' }}
 					onChange={(event) => props.change(event, props.material_id, 'actualReleaseDate')}
-					name={props.actualRelease}
+					name={props.actualReleaseDate}
 				/>
 			</td>
 			<td className={classes.calculatedTableField}>
-				<input value="7" />
+				<input
+					value={props.buyoutVariance}
+					style={{ width: '150px' }}
+					onChange={(event) => props.change(event, props.material_id, 'buyoutVariance')}
+					name={props.buyoutVariance}
+				/>
 			</td>
 			<td>
 				<input
-					value={props.prepTime}
+					value={props.submittalPrepTime}
 					style={{ width: '150px' }}
 					onChange={(event) => props.change(event, props.material_id, 'submittalPrepTime')}
-					name={props.prepTime}
+					name={props.submittalPrepTime}
 				/>
 			</td>
 			<td className={classes.calculatedTableField}>
-				<input value="7" />
-			</td>
-			<td className={classes.calculatedTableField}>
-				<input value="7" />
+				<input
+					type="date"
+					value={props.requiredSubmissionDate}
+					style={{ width: '150px' }}
+					onChange={(event) => props.change(event, props.material_id, 'requiredSubmissionDate')}
+					name={props.requiredSubmissionDate}
+				/>
 			</td>
 			<td>
 				<input
@@ -75,17 +89,31 @@ const material = (props) => {
 					name={props.requestedSubmittal}
 				/>
 			</td>
+			<td className={classes.calculatedTableField}>
+				<input
+					type="date"
+					value={props.ancitipcatedSubmissionDate}
+					style={{ width: '150px' }}
+					onChange={(event) => props.change(event, props.material_id, 'ancitipcatedSubmissionDate')}
+					name={props.ancitipcatedSubmissionDate}
+				/>
+			</td>
 			<td>
 				<input
 					type="date"
-					value={props.actualSubmission}
+					value={props.actualSubmissionDate}
 					style={{ width: '150px' }}
 					onChange={(event) => props.change(event, props.material_id, 'actualSubmissionDate')}
-					name={props.actualSubmission}
+					name={props.actualSubmissionDate}
 				/>
 			</td>
 			<td className={classes.calculatedTableField}>
-				<input value="7" />
+				<input
+					value={props.submittalVariance}
+					style={{ width: '150px' }}
+					onChange={(event) => props.change(event, props.material_id, 'submittalVariance')}
+					name={props.submittalVariance}
+				/>
 			</td>
 			<td>
 				<input
@@ -96,27 +124,37 @@ const material = (props) => {
 				/>
 			</td>
 			<td className={classes.calculatedTableField}>
-				<input value="7" />
-			</td>
-			<td>
 				<input
-					value={props.anticipatedApproval}
+					value={props.requiredApprovalDate}
+					style={{ width: '150px' }}
+					onChange={(event) => props.change(event, props.material_id, 'requiredApprovalDate')}
+					name={props.requiredApprovalDate}
+				/>
+			</td>
+			<td className={classes.calculatedTableField}>
+				<input
+					value={props.anticipatedApprovalDate}
 					style={{ width: '150px' }}
 					onChange={(event) => props.change(event, props.material_id, 'anticipatedApprovalDate')}
-					name={props.anticipatedApproval}
+					name={props.anticipatedApprovalDate}
 				/>
 			</td>
 			<td>
 				<input
 					type="date"
-					value={props.actualApproval}
+					value={props.actualApprovalDate}
 					style={{ width: '150px' }}
 					onChange={(event) => props.change(event, props.material_id, 'actualApprovalDate')}
-					name={props.actualApproval}
+					name={props.actualApprovalDate}
 				/>
 			</td>
 			<td className={classes.calculatedTableField}>
-				<input value="7" />
+				<input
+					value={props.approvalVariance}
+					style={{ width: '150px' }}
+					onChange={(event) => props.change(event, props.material_id, 'approvalVariance')}
+					name={props.approvalVariance}
+				/>
 			</td>
 			<td>
 				<input
@@ -126,7 +164,7 @@ const material = (props) => {
 					name={props.leadTime}
 				/>
 			</td>
-			<td>
+			<td className={classes.RequiredOnSite}>
 				<input
 					type="date"
 					value={props.requiredOnSite}
@@ -136,36 +174,46 @@ const material = (props) => {
 				/>
 			</td>
 			<td className={classes.calculatedTableField}>
-				<input value="7" />
+				<input
+					value={props.anticipatedDeliveryDate}
+					style={{ width: '150px' }}
+					onChange={(event) => props.change(event, props.material_id, 'anticipatedDeliveryDate')}
+					name={props.anticipatedDeliveryDate}
+				/>
 			</td>
 			<td>
 				<input
 					type="date"
-					value={props.confirmedDelivery}
+					value={props.confirmedDeliveryDate}
 					style={{ width: '150px' }}
 					onChange={(event) => props.change(event, props.material_id, 'confirmedDeliveryDate')}
-					name={props.confirmedDelivery}
+					name={props.confirmedDeliveryDate}
 				/>
 			</td>
 			<td>
 				<input
-					value={props.warehouse}
+					value={props.confirmedSubWarehouse}
 					style={{ width: '150px' }}
 					onChange={(event) => props.change(event, props.material_id, 'confirmedSubWarehouse')}
-					name={props.warehouse}
+					name={props.confirmedSubWarehouse}
 				/>
 			</td>
 			<td>
 				<input
 					type="date"
-					value={props.actualDelivery}
+					value={props.actualDeliveryDate}
 					style={{ width: '150px' }}
 					onChange={(event) => props.change(event, props.material_id, 'actualDeliveryDate')}
-					name={props.actualDelivery}
+					name={props.actualDeliveryDate}
 				/>
 			</td>
 			<td className={classes.calculatedTableField}>
-				<input value="7" />
+				<input
+					value={props.deliveryVariance}
+					style={{ width: '150px' }}
+					onChange={(event) => props.change(event, props.material_id, 'deliveryVariance')}
+					name={props.deliveryVariance}
+				/>
 			</td>
 			<td>
 				<input
