@@ -28,3 +28,11 @@ This project aims to decrease the risk of procurement mishaps / mistakes by tyin
 - create logs with more customizable styling to draw attention to the most critical items at the present time
 - create a data archive that can be used to determine which subcontractors, managers, and archtects submit/return items on time so future teams can look for areas to focus on
 
+# Current Backlog / Future Work
+
+- Make dropdown forms/lists for delivery field and submittal/material tie fields
+- Determine how to make a calculated column based on values in two other columns
+- Fix id system; currently if items are added they don't get assigned a unique ID until page refreshes. This causes all items to be delted if one row is deleted
+- Connect submittals tab to Procore API
+- Create styling for rows to highlight critical items
+- Create sorting feature for table columns
