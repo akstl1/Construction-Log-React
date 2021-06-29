@@ -5,14 +5,19 @@ import Header from '../../components/submittalHeader/submittalHeader';
 import axios from '../../axios';
 import MaterialButton from '../../components/Buttons/MaterialButton/MaterialButton';
 
+// Submittals container is the general page the submittal log will be displayed
+
 class Submittals extends Component {
 	state = {
-		submittals: [],
-		error: false
+		submittals: [] /*List of subnmittals in the log*/,
+		// error: false,
+		submittal_id: 0 /*ID generator to prevent mass deletion bug, as noted in materials.js comments */
 	};
 
+	// lifecycle hook to assign IDs to all materials based on firebase ID when page refreshes
 	componentDidMount() {
-		console.log('mount');
+		// console.log('mount');
+		// get current submittal list, loop over it and set ID equal to the corresponding key value in firebase
 		axios.get('/submittals.json').then((response) => {
 			const submittals = response.data;
 			const submittalList = [];
@@ -21,15 +26,16 @@ class Submittals extends Component {
 				submittals[key].key = key;
 				submittalList.push(submittals[key]);
 			}
-
+			// update value of materials state so all new IDs are included
 			this.setState({ submittals: submittalList });
 		});
 	}
 
+	// button used to create a new row in the submittal log, with all the standard columns. Most rows are blank by default.
 	createButtonHandler = () => {
 		const newSubmittal = {
 			submittalTitle: '',
-			submittal_id: '',
+			submittal_id: this.state.submittal_id,
 			specSection: 1,
 			specSectionDescription: '',
 			submittalNumber: '',
@@ -50,19 +56,27 @@ class Submittals extends Component {
 			submittalNotes: ''
 		};
 
+		// update submittal state to include above submittal value
 		const currentSubmittals = [ ...this.state.submittals, newSubmittal ];
 		this.setState({ submittals: currentSubmittals });
 
+		// increment submittal_id state so new rows have a new state and don't lead to bug mentioned in comments above when state is created.
 		axios.post('/submittals.json', newSubmittal);
+		let new_sub_id = this.state.submittal_id + 1;
+		this.setState({ submittal_id: new_sub_id });
 	};
 
+	// button to handle deletion of row from log
 	deleteItemHandler = (id) => {
+		// get current material state, and reset it to NOT include row with the identified ID
+
 		const currentSubmittals = this.state.submittals;
-		console.log('hit');
+		// console.log('hit');
 		this.setState({
 			submittals: currentSubmittals.filter((submittal) => submittal.submittal_id !== id)
 		});
 
+		// Delete call to Db to delete the row with ID in question
 		axios
 			.delete('/submittals/' + id + '.json')
 			.then((response) => {
@@ -74,9 +88,13 @@ class Submittals extends Component {
 			});
 	};
 
+	// event handler to manage updates to table values
 	submittalChangeHandler = (event, id, val) => {
+		// save the event to a variable
 		const newValue = event.target.value;
 
+		// patch Db so the value in question for the material, denoted by ID, and attribute, denoted by val, is updated
+		// Then reset state so change is implemented on the page
 		axios.patch('/submittals/' + id + '.json', { [val]: newValue }).then((response) => {
 			axios.get('/submittals.json').then((response) => {
 				const submittals = response.data;
@@ -93,6 +111,8 @@ class Submittals extends Component {
 	};
 
 	render() {
+		// map all materials in the materials state to the Material component, which generates rows for each material with the given props
+
 		const Submittal_list = this.state.submittals.map((submittal) => {
 			return (
 				<Submittal
@@ -123,6 +143,8 @@ class Submittals extends Component {
 				/>
 			);
 		});
+
+		// render page with: header (to be replaced with navbar in the future), Title and title text, list of materials, footer, and create item button
 
 		return (
 			<div>

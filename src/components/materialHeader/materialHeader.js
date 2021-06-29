@@ -2,6 +2,7 @@ import React from 'react';
 import classes from './materialHeader.module.css';
 // import './tableHeader.module.css';
 
+// list of headers for the material log
 const header = () => {
 	return (
 		<tr>

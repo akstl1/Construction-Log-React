@@ -1,9 +1,16 @@
 import React from 'react';
 import classes from './Submittal.module.css';
 import SubmittalTie from '../SubmittalTie/SubmittalTie';
+
+// submittal component to display a single row in the submittal table
+
 const submittal = (props) => {
 	// console.log(props);
+
+	// variable to store submittals tied to materials, which can then be mapped to the 'submittals' column. work in progress
 	const materialList = props.submittalMaterialImpacted;
+
+	// basic table row structre. Each td links to one of the passed props, which is displayed therein in an input tag. onChange calls the change handler to update the cell value
 	return (
 		<tr>
 			<td>

@@ -5,15 +5,20 @@ import Header from '../../components/materialHeader/materialHeader';
 import axios from '../../axios';
 import MaterialButton from '../../components/Buttons/MaterialButton/MaterialButton';
 
+// Materials cntainer is the general page the materials log will be displayed
+
 class Materials extends Component {
 	state = {
-		materials: [],
-		error: false
+		materials: [] /* List of current materials in the system */,
+		// error: false,
+		mat_id: 0 /* temp material ID state field. Prevents bug that occurred: when many new items were created, they didn't have ID from Db yet and would all be deleted if one was deleted */
 	};
 
+	// lifecycle hook to assign IDs to all materials based on firebase ID when page refreshes
 	componentDidMount() {
-		console.log('mount');
+		// console.log('mount');
 		axios.get('/materials.json').then((response) => {
+			// get current material list, loop over it and set ID equal to the corresponding key value in firebase
 			const materials = response.data;
 			const materialList = [];
 			for (var key in materials) {
@@ -21,14 +26,15 @@ class Materials extends Component {
 				materials[key].key = key;
 				materialList.push(materials[key]);
 			}
-
+			// update value of materials state so all new IDs are included
 			this.setState({ materials: materialList });
 		});
 	}
 
+	// button used to create a new row in the material log, with all the standard columns. Most rows are blank by default.
 	createButtonHandler = () => {
 		const newMaterial = {
-			material_id: '',
+			material_id: this.state.mat_id,
 			item: '',
 			specSection: '',
 			responsibleSubcontractor: '',
@@ -57,19 +63,29 @@ class Materials extends Component {
 			Notes: ''
 		};
 
+		// update materials state to include above material value
 		const currentMaterials = [ ...this.state.materials, newMaterial ];
 		this.setState({ materials: currentMaterials });
-
 		axios.post('/materials.json', newMaterial);
+
+		// increment mat_id state so new rows have a new state and don't lead to bug mentioned in comments above when state is created.
+		let new_mat_id = this.state.mat_id + 1;
+		this.setState({ mat_id: new_mat_id });
 	};
 
+	// button to be built out in future, to tie in submittals to the material log
+	addMaterialButtonHandler = (event, id, val) => {};
+
+	// button to handle deletion of row from log
 	deleteItemHandler = (id) => {
+		// get current material state, and reset it to NOT include row with the identified ID
 		const currentMaterials = this.state.materials;
-		console.log('hit');
+		// console.log('hit');
 		this.setState({
 			materials: currentMaterials.filter((material) => material.material_id !== id)
 		});
 
+		// Delete call to Db to delete the row with ID in question
 		axios
 			.delete('/materials/' + id + '.json')
 			.then((response) => {
@@ -81,10 +97,14 @@ class Materials extends Component {
 			});
 	};
 
-	materialChangeHandler = (event, id, val) => {
+	// event handler to manage updates to table values
+	materialChangeHandler = (event, id, attribute) => {
+		// save the event to a variable
 		const newValue = event.target.value;
 
-		axios.patch('/materials/' + id + '.json', { [val]: newValue }).then((response) => {
+		// patch Db so the value in question for the material, denoted by ID, and attribute, denoted by val, is updated
+		// Then reset state so change is implemented on the page
+		axios.patch('/materials/' + id + '.json', { [attribute]: newValue }).then((response) => {
 			axios.get('/materials.json').then((response) => {
 				const materials = response.data;
 				const materialList = [];
@@ -100,6 +120,7 @@ class Materials extends Component {
 	};
 
 	render() {
+		// map all materials in the materials state to the Material component, which generates rows for each material with the given props
 		const Material_list = this.state.materials.map((material) => {
 			return (
 				<Material
@@ -137,6 +158,7 @@ class Materials extends Component {
 			);
 		});
 
+		// render page with: header (to be replaced with navbar in the future), Title and title text, list of materials, footer, and create item button
 		return (
 			<div>
 				<div className={classes.header}>

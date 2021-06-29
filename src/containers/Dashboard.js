@@ -3,8 +3,10 @@ import React, { Component } from 'react';
 import Home from './home/home';
 import Materials from './materials/materials';
 import Submittals from './submittals/submittals';
-
 import { Route, Link } from 'react-router-dom';
+
+// Basic homepage with h1 and routes to other pages.
+// To be built out in future once submittal and material functionality is implemented
 class Dashboard extends Component {
 	render() {
 		return (

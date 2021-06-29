@@ -2,6 +2,7 @@ import React from 'react';
 import classes from './submittalHeader.module.css';
 // import './tableHeader.module.css';
 
+// list of headers for the submittal table
 const submittalHeader = () => {
 	return (
 		<tr>
@@ -26,15 +27,6 @@ const submittalHeader = () => {
 			<th className={classes.calculatedTableField}>Design Team Review Time</th>
 			<th className={classes.calculatedTableField}>Internal Review Time</th>
 			<th> Notes</th>
-			{/* <th>Actual Submittal Approval Date</th>
-			<th className={classes.calculatedTableField}>Approval Variance</th>
-			<th>Lead Time</th>
-			<th className={classes.RequiredOnSite}>Required On Site Date</th>
-			<th className={classes.calculatedTableField}>Anticipated Delivery Date</th>
-			<th>Confirmed Delivery Date</th>
-			<th>Confirmed Sub Warehouse (Y/N)</th>
-			<th>Actual Delivery Date</th>
-			<th className={classes.calculatedTableField}> Delivery Variance (Days)</th> */}
 		</tr>
 	);
 };
