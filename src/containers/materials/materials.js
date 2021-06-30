@@ -11,7 +11,12 @@ class Materials extends Component {
 	state = {
 		materials: [] /* List of current materials in the system */,
 		// error: false,
-		mat_id: 0 /* temp material ID state field. Prevents bug that occurred: when many new items were created, they didn't have ID from Db yet and would all be deleted if one was deleted */
+
+		/* temp material ID state field. Prevents bug that occurred: when many new items were created, they didn't have ID from Db yet and would all be deleted if one was deleted */
+
+		mat_id: 0,
+
+		submittalText: ''
 	};
 
 	// lifecycle hook to assign IDs to all materials based on firebase ID when page refreshes
@@ -60,7 +65,8 @@ class Materials extends Component {
 			confirmedSubWarehouse: '',
 			actualDeliveryDate: '',
 			deliveryVariance: '',
-			Notes: ''
+			Notes: '',
+			formText: ''
 		};
 
 		// update materials state to include above material value
@@ -119,6 +125,31 @@ class Materials extends Component {
 		});
 	};
 
+	submittalFormSubmitHandler = (id, submittals, va) => {
+		console.log('submitting form');
+
+		const newValue = va;
+
+		console.log(newValue);
+
+		const newSubmittals = [ ...submittals, newValue ];
+
+		axios.patch('/materials/' + id + '.json', { submittals: newSubmittals, formText: '' }).then((response) => {
+			axios.get('/materials.json').then((response) => {
+				const materials = response.data;
+				const materialList = [];
+				for (var key in materials) {
+					materials[key].material_id = key;
+					materials[key].key = key;
+					materialList.push(materials[key]);
+				}
+
+				this.setState({ materials: materialList });
+			});
+		});
+		// event.preventDefault();
+	};
+
 	render() {
 		// map all materials in the materials state to the Material component, which generates rows for each material with the given props
 		const Material_list = this.state.materials.map((material) => {
@@ -152,8 +183,12 @@ class Materials extends Component {
 					actualDeliveryDate={material.actualDeliveryDate}
 					deliveryVariance={material.deliveryVariance}
 					notes={material.Notes}
+					submittalTextState={this.state.submittalText}
+					submittalFormText={material.formText}
 					delete={this.deleteItemHandler}
 					change={this.materialChangeHandler}
+					// formChange={this.submittalChangeHandler}
+					formSubmit={this.submittalFormSubmitHandler}
 				/>
 			);
 		});

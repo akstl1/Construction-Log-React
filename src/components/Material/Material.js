@@ -6,14 +6,12 @@ import 'react-dropdown/style.css';
 
 // material component to display a single row in the material table
 const material = (props) => {
-	// console.log(props);
-
 	// variable to store submittals tied to materials, which can then be mapped to the 'submittals' column. work in progress
 	const submittalList = props.submittals;
 
 	// variables to help implement warehouse delivery prop dropdown; work in progress
-	const options = [ '', 'Yes', 'No' ];
-	const defaultOption = options[0];
+	// const options = [ '', 'Yes', 'No' ];
+	// const defaultOption = options[0];
 
 	// basic table row structre. Each td links to one of the passed props, which is displayed therein in an input tag. onChange calls the change handler to update the cell value
 	// exceptions to this structure will be submittals and delivery confirmation, as noted above
@@ -49,7 +47,23 @@ const material = (props) => {
 					name={props.responsibleSubcontractor}
 				/>
 			</td>
-			<td>{submittalList.map((submittal) => <SubmittalTie key={submittal} value={submittal} />)}</td>
+			<td>
+				{
+					<form
+						onSubmit={() => props.formSubmit(props.material_id, props.submittals, props.submittalFormText)}
+					>
+						<label>
+							<input
+								type="text"
+								value={props.submittalFormText}
+								onChange={(event) => props.change(event, props.material_id, 'formText')}
+							/>
+						</label>
+						<input type="submit" value="Submit" />
+					</form>
+				}
+				{submittalList.map((submittal) => <SubmittalTie key={submittal} value={submittal} />)}
+			</td>
 			<td className={classes.calculatedTableField}>
 				<input
 					type="date"
