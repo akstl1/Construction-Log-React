@@ -1,13 +1,17 @@
 import React from 'react';
 import classes from './Material.module.css';
 import SubmittalTie from '../SubmittalTie/SubmittalTie';
-import Dropdown from 'react-dropdown';
+// import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
+import DropdownButton from 'react-bootstrap/DropdownButton';
+import Dropdown from 'react-bootstrap/Dropdown';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 // material component to display a single row in the material table
 const material = (props) => {
 	// variable to store submittals tied to materials, which can then be mapped to the 'submittals' column. work in progress
 	const submittalList = props.submittals;
+	const submittalFormList = props.submittalList;
 
 	// variables to help implement warehouse delivery prop dropdown; work in progress
 	// const options = [ '', 'Yes', 'No' ];
@@ -48,7 +52,7 @@ const material = (props) => {
 				/>
 			</td>
 			<td>
-				{
+				{/* {
 					<form
 						onSubmit={() => props.formSubmit(props.material_id, props.submittals, props.submittalFormText)}
 					>
@@ -61,7 +65,29 @@ const material = (props) => {
 						</label>
 						<input type="submit" value="Submit" />
 					</form>
+				} */}
+				{
+					<DropdownButton
+						alignRight
+						title="Dropdown right"
+						id="dropdown-menu-align-right"
+						onSelect={(event) => props.formSubmit(props.material_id, props.submittals, event)}
+					>
+						{/* <Dropdown.Item eventKey="option-1">option-1</Dropdown.Item>
+						<Dropdown.Item eventKey="option-2">option-2</Dropdown.Item>
+						<Dropdown.Item eventKey="option-3">option 3</Dropdown.Item> */}
+						{submittalFormList.length ? (
+							submittalFormList.map((submittal) => (
+								<Dropdown.Item key={submittal.submittal_id} eventKey={submittal.submittalTitle}>
+									{submittal.submittalTitle}
+								</Dropdown.Item>
+							))
+						) : (
+							<p>Default</p>
+						)}
+					</DropdownButton>
 				}
+
 				{submittalList.map((submittal) => <SubmittalTie key={submittal} value={submittal} />)}
 			</td>
 			<td className={classes.calculatedTableField}>

@@ -2,6 +2,8 @@
 import React, { Component } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import Dashboard from './containers/Dashboard';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 class App extends Component {
 	constructor(props) {
 		super(props);

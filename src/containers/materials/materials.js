@@ -16,7 +16,8 @@ class Materials extends Component {
 
 		mat_id: 0,
 
-		submittalText: ''
+		submittalText: '',
+		submittals: []
 	};
 
 	// lifecycle hook to assign IDs to all materials based on firebase ID when page refreshes
@@ -34,6 +35,19 @@ class Materials extends Component {
 			// update value of materials state so all new IDs are included
 			this.setState({ materials: materialList });
 		});
+
+		axios.get('/submittals.json').then((response) => {
+			// get current material list, loop over it and set ID equal to the corresponding key value in firebase
+			const submittals = response.data;
+			const submittalList = [];
+			for (var key in submittals) {
+				submittals[key].submittal_id = key;
+				submittals[key].key = key;
+				submittalList.push(submittals[key]);
+			}
+			// update value of materials state so all new IDs are included
+			this.setState({ submittals: submittalList });
+		});
 	}
 
 	// button used to create a new row in the material log, with all the standard columns. Most rows are blank by default.
@@ -43,7 +57,7 @@ class Materials extends Component {
 			item: '',
 			specSection: '',
 			responsibleSubcontractor: '',
-			submittals: [ 1, 2 ],
+			submittals: [ 2 ],
 			anticipatedReleaseDate: '',
 			actualReleaseDate: '',
 			buyoutVariance: '',
@@ -134,7 +148,7 @@ class Materials extends Component {
 
 		const newSubmittals = [ ...submittals, newValue ];
 
-		axios.patch('/materials/' + id + '.json', { submittals: newSubmittals, formText: '' }).then((response) => {
+		axios.patch('/materials/' + id + '.json', { submittals: newSubmittals }).then((response) => {
 			axios.get('/materials.json').then((response) => {
 				const materials = response.data;
 				const materialList = [];
@@ -187,8 +201,9 @@ class Materials extends Component {
 					submittalFormText={material.formText}
 					delete={this.deleteItemHandler}
 					change={this.materialChangeHandler}
-					// formChange={this.submittalChangeHandler}
 					formSubmit={this.submittalFormSubmitHandler}
+					addSubmittal={this.submittalDropdownHandler}
+					submittalList={this.state.submittals}
 				/>
 			);
 		});
