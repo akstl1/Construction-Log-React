@@ -57,7 +57,7 @@ class Materials extends Component {
 			item: '',
 			specSection: '',
 			responsibleSubcontractor: '',
-			submittals: [ 2 ],
+			submittals: [ { submittal_id: 1, submittalTitle: 'Test' } ],
 			anticipatedReleaseDate: '',
 			actualReleaseDate: '',
 			buyoutVariance: '',
@@ -140,15 +140,15 @@ class Materials extends Component {
 	};
 
 	submittalFormSubmitHandler = (id, submittals, va) => {
-		console.log('submitting form');
+		// console.log('submitting form');
 
-		const newValue = va;
+		const newValue = this.state.submittals.filter((submittal) => submittal.submittalTitle === va)[0];
 
-		console.log(newValue);
+		// console.log('newValue', newValue);
 
-		const newSubmittals = [ ...submittals, newValue ];
-
-		axios.patch('/materials/' + id + '.json', { submittals: newSubmittals }).then((response) => {
+		const newSubmittalsList = [ ...submittals, newValue ];
+		// console.log('newSubmittalsList', newSubmittalsList);
+		axios.patch('/materials/' + id + '.json', { submittals: newSubmittalsList }).then((response) => {
 			axios.get('/materials.json').then((response) => {
 				const materials = response.data;
 				const materialList = [];
@@ -161,7 +161,6 @@ class Materials extends Component {
 				this.setState({ materials: materialList });
 			});
 		});
-		// event.preventDefault();
 	};
 
 	render() {

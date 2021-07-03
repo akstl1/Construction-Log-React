@@ -10,8 +10,19 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 // material component to display a single row in the material table
 const material = (props) => {
 	// variable to store submittals tied to materials, which can then be mapped to the 'submittals' column. work in progress
+
 	const submittalList = props.submittals;
-	const submittalFormList = props.submittalList;
+	let submittalLogValues = props.submittalList;
+	let existingIDs = [];
+	submittalList.forEach((element) => existingIDs.push(element.submittal_id));
+
+	// submittalList.forEach(element => delete submittalLogValues[element.key])
+	let submittalFormList = submittalLogValues.filter((x) => !existingIDs.includes(x.key));
+
+	// console.log('submittallogvalues', submittalLogValues);
+	// console.log('existingID', existingIDs);
+	// console.log('submittalList', submittalList);
+	// console.log('submittalFormList', submittalFormList);
 
 	// variables to help implement warehouse delivery prop dropdown; work in progress
 	// const options = [ '', 'Yes', 'No' ];
@@ -52,43 +63,26 @@ const material = (props) => {
 				/>
 			</td>
 			<td>
-				{/* {
-					<form
-						onSubmit={() => props.formSubmit(props.material_id, props.submittals, props.submittalFormText)}
-					>
-						<label>
-							<input
-								type="text"
-								value={props.submittalFormText}
-								onChange={(event) => props.change(event, props.material_id, 'formText')}
-							/>
-						</label>
-						<input type="submit" value="Submit" />
-					</form>
-				} */}
-				{
-					<DropdownButton
-						alignRight
-						title="Dropdown right"
-						id="dropdown-menu-align-right"
-						onSelect={(event) => props.formSubmit(props.material_id, props.submittals, event)}
-					>
-						{/* <Dropdown.Item eventKey="option-1">option-1</Dropdown.Item>
-						<Dropdown.Item eventKey="option-2">option-2</Dropdown.Item>
-						<Dropdown.Item eventKey="option-3">option 3</Dropdown.Item> */}
-						{submittalFormList.length ? (
-							submittalFormList.map((submittal) => (
-								<Dropdown.Item key={submittal.submittal_id} eventKey={submittal.submittalTitle}>
-									{submittal.submittalTitle}
-								</Dropdown.Item>
-							))
-						) : (
-							<p>Default</p>
-						)}
-					</DropdownButton>
-				}
+				<DropdownButton
+					alignRight
+					title="Dropdown right"
+					id="dropdown-menu-align-right"
+					onSelect={(event) => props.formSubmit(props.material_id, props.submittals, event)}
+				>
+					{submittalFormList.length ? (
+						submittalFormList.map((submittal) => (
+							<Dropdown.Item key={submittal.submittal_id} eventKey={submittal.submittalTitle}>
+								{submittal.submittalTitle}
+							</Dropdown.Item>
+						))
+					) : (
+						<p>Default</p>
+					)}
+				</DropdownButton>
 
-				{submittalList.map((submittal) => <SubmittalTie key={submittal} value={submittal} />)}
+				{submittalList.map((submittal) => (
+					<SubmittalTie key={submittal.submittal_id} value={submittal.submittalTitle} />
+				))}
 			</td>
 			<td className={classes.calculatedTableField}>
 				<input
