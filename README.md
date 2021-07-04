@@ -30,9 +30,12 @@ This project aims to decrease the risk of procurement mishaps / mistakes by tyin
 
 # Current Backlog / Future Work
 
-- Make dropdown forms/lists for delivery field and submittal/material tie fields
 - Determine how to make a calculated column based on values in two other columns
 - Fix id system; currently if items are added they don't get assigned a unique ID until page refreshes. This causes all items to be delted if one row is deleted
 - Connect submittals tab to Procore API
 - Create styling for rows to highlight critical items
 - Create sorting feature for table columns
+
+# Issues Resolved
+- Make dropdown forms/lists for delivery field and submittal/material tie fields
+
