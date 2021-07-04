@@ -6,6 +6,7 @@ import 'react-dropdown/style.css';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Select from 'react-select';
 
 // material component to display a single row in the material table
 const material = (props) => {
@@ -79,7 +80,6 @@ const material = (props) => {
 						<p>Default</p>
 					)}
 				</DropdownButton>
-
 				{submittalList.map((submittal) => (
 					<SubmittalTie key={submittal.submittal_id} value={submittal.submittalTitle} />
 				))}

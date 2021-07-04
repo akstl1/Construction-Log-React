@@ -161,6 +161,27 @@ class Materials extends Component {
 				this.setState({ materials: materialList });
 			});
 		});
+
+		const submittalMaterialList = newValue.submittalMaterialImpacted;
+		const submittal_id = newValue.submittal_id;
+		const newMaterialValue = this.state.materials.filter((material) => material.material_id === id)[0];
+		const newMaterialsList2 = [ ...submittalMaterialList, newMaterialValue ];
+		console.log(submittal_id);
+		axios
+			.patch('/submittals/' + submittal_id + '.json', { submittalMaterialImpacted: newMaterialsList2 })
+			.then((response) => {
+				axios.get('/submittals.json').then((response) => {
+					const submittals = response.data;
+					const submittalList = [];
+					for (var key in submittals) {
+						submittals[key].submittal_id = key;
+						submittals[key].key = key;
+						submittalList.push(submittals[key]);
+					}
+
+					this.setState({ submittals: submittalList });
+				});
+			});
 	};
 
 	render() {

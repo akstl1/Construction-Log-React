@@ -1,7 +1,11 @@
 import React from 'react';
 import classes from './Submittal.module.css';
 import SubmittalTie from '../SubmittalTie/SubmittalTie';
-
+import 'react-dropdown/style.css';
+import DropdownButton from 'react-bootstrap/DropdownButton';
+import Dropdown from 'react-bootstrap/Dropdown';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Select from 'react-select';
 // submittal component to display a single row in the submittal table
 
 const submittal = (props) => {
@@ -9,7 +13,16 @@ const submittal = (props) => {
 
 	// variable to store submittals tied to materials, which can then be mapped to the 'submittals' column. work in progress
 	const materialList = props.submittalMaterialImpacted;
+	let materialLogValues = props.materialList;
+	let existingIDs = [];
+	materialList.forEach((element) => existingIDs.push(element.material_id));
 
+	// submittalList.forEach(element => delete submittalLogValues[element.key])
+	let submittalFormList = materialLogValues.filter((x) => !existingIDs.includes(x.key));
+	// console.log('materialList', materialList);
+	// console.log('materialLogValues', materialLogValues);
+	// console.log('existingIDs', existingIDs);
+	// console.log('submittalFormList', submittalFormList);
 	// basic table row structre. Each td links to one of the passed props, which is displayed therein in an input tag. onChange calls the change handler to update the cell value
 	return (
 		<tr>
@@ -61,7 +74,26 @@ const submittal = (props) => {
 				/>
 			</td>
 
-			<td>{materialList.map((item) => <SubmittalTie key={item} value={item} />)}</td>
+			<td>
+				<DropdownButton
+					alignRight
+					title="Dropdown right"
+					id="dropdown-menu-align-right"
+					onSelect={(event) =>
+						props.submitMaterialForm(props.submittal_id, props.submittalMaterialImpacted, event)}
+				>
+					{submittalFormList.length ? (
+						submittalFormList.map((material) => (
+							<Dropdown.Item key={material.key} eventKey={material.item}>
+								{material.item}
+							</Dropdown.Item>
+						))
+					) : (
+						<p>Default</p>
+					)}
+				</DropdownButton>
+				{materialList.map((material) => <SubmittalTie key={material.key} value={material.item} />)}
+			</td>
 			<td>
 				<input
 					value={props.submittalResponsibleContractor}

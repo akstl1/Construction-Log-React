@@ -11,7 +11,8 @@ class Submittals extends Component {
 	state = {
 		submittals: [] /*List of subnmittals in the log*/,
 		// error: false,
-		submittal_id: 0 /*ID generator to prevent mass deletion bug, as noted in materials.js comments */
+		submittal_id: 0 /*ID generator to prevent mass deletion bug, as noted in materials.js comments */,
+		materials: []
 	};
 
 	// lifecycle hook to assign IDs to all materials based on firebase ID when page refreshes
@@ -29,6 +30,19 @@ class Submittals extends Component {
 			// update value of materials state so all new IDs are included
 			this.setState({ submittals: submittalList });
 		});
+
+		axios.get('/materials.json').then((response) => {
+			// get current material list, loop over it and set ID equal to the corresponding key value in firebase
+			const materials = response.data;
+			const materialList = [];
+			for (var key in materials) {
+				materials[key].material_id = key;
+				materials[key].key = key;
+				materialList.push(materials[key]);
+			}
+			// update value of materials state so all new IDs are included
+			this.setState({ materials: materialList });
+		});
 	}
 
 	// button used to create a new row in the submittal log, with all the standard columns. Most rows are blank by default.
@@ -40,7 +54,7 @@ class Submittals extends Component {
 			specSectionDescription: '',
 			submittalNumber: '',
 			submittalDescription: '',
-			submittalMaterialImpacted: [ 'material1', 'material2' ],
+			submittalMaterialImpacted: [ { material_id: 1, item: 'Test' } ],
 			submittalResponsibleContractor: '',
 			submittalManager: '',
 			submittalStatus: '',
@@ -110,6 +124,50 @@ class Submittals extends Component {
 		});
 	};
 
+	materialFormSubmitHandler = (id, submittals, va) => {
+		console.log('submitting form');
+		console.log('va', va);
+		const newValue = this.state.materials.filter((materials) => materials.item === va)[0];
+
+		console.log('newValue', newValue);
+
+		const newSubmittalsList = [ ...submittals, newValue ];
+		// console.log('newSubmittalsList', newSubmittalsList);
+		axios
+			.patch('/submittals/' + id + '.json', { submittalMaterialImpacted: newSubmittalsList })
+			.then((response) => {
+				axios.get('/submittals.json').then((response) => {
+					const submittals = response.data;
+					const submittalList = [];
+					for (var key in submittals) {
+						submittals[key].material_id = key;
+						submittals[key].key = key;
+						submittalList.push(submittals[key]);
+					}
+
+					this.setState({ submittals: submittalList });
+				});
+			});
+
+		const materialSubmittalList = newValue.submittals;
+		const material_id = newValue.material_id;
+		const newSubmittalValue = this.state.submittals.filter((submittals) => submittals.submittal_id === id)[0];
+		const newSubmittalsList2 = [ ...materialSubmittalList, newSubmittalValue ];
+		axios.patch('/materials/' + material_id + '.json', { submittals: newSubmittalsList2 }).then((response) => {
+			axios.get('/materials.json').then((response) => {
+				const materials = response.data;
+				const materialList = [];
+				for (var key in materials) {
+					materials[key].material_id = key;
+					materials[key].key = key;
+					materialList.push(materials[key]);
+				}
+
+				this.setState({ materials: materialList });
+			});
+		});
+	};
+
 	render() {
 		// map all materials in the materials state to the Material component, which generates rows for each material with the given props
 
@@ -140,6 +198,8 @@ class Submittals extends Component {
 					requiredOnSite={submittal.requiredOnSite}
 					delete={this.deleteItemHandler}
 					change={this.submittalChangeHandler}
+					submitMaterialForm={this.materialFormSubmitHandler}
+					materialList={this.state.materials}
 				/>
 			);
 		});
