@@ -118,10 +118,10 @@ class Materials extends Component {
 	};
 
 	// event handler to manage updates to table values
-	materialChangeHandler = (event, id, attribute) => {
+	materialChangeHandler = (event, id, attribute, existing_submittals) => {
 		// save the event to a variable
 		const newValue = event.target.value;
-
+		console.log('newValue', newValue);
 		// patch Db so the value in question for the material, denoted by ID, and attribute, denoted by val, is updated
 		// Then reset state so change is implemented on the page
 		axios.patch('/materials/' + id + '.json', { [attribute]: newValue }).then((response) => {
@@ -137,16 +137,51 @@ class Materials extends Component {
 				this.setState({ materials: materialList });
 			});
 		});
+		// let existing_submittal2 = existing_submittals[1:]
+		console.log('materials', this.state.materials);
+		if (this.state.materials & existing_submittals) {
+			console.log('materials', this.state.materials);
+			let newMaterialValue = this.state.materials.filter((material) => material.material_id === id)[0];
+			newMaterialValue[attribute] = event.target.value;
+			console.log('newMaterial', newMaterialValue);
+
+			existing_submittals.slice(1).forEach((submittal) => {
+				console.log(submittal);
+				const submittal_id = submittal.submittal_id;
+				const currentMaterialList = submittal.submittalMaterialImpacted;
+				const filteredMaterialList = currentMaterialList.filter((material) => material.material_id === id);
+				const newMaterialList = [ ...filteredMaterialList, newMaterialValue ];
+				console.log('newMaterialList', newMaterialList);
+
+				axios
+					.patch('/submittals/' + submittal_id + '.json', { submittalMaterialImpacted: newMaterialList })
+					.then((response) => {
+						axios.get('/submittals.json').then((response) => {
+							const submittals = response.data;
+							const submittalList = [];
+							for (var key in submittals) {
+								submittals[key].submittal_id = key;
+								submittals[key].key = key;
+								submittalList.push(submittals[key]);
+							}
+
+							this.setState({ submittals: submittalList });
+						});
+					});
+			});
+		}
 	};
 
-	submittalFormSubmitHandler = (id, submittals, va) => {
+	submittalFormSubmitHandler = (id, existing_submittals, submittal_title) => {
 		// console.log('submitting form');
 
-		const newValue = this.state.submittals.filter((submittal) => submittal.submittalTitle === va)[0];
+		const new_submittal = this.state.submittals.filter(
+			(submittal) => submittal.submittalTitle === submittal_title
+		)[0];
 
 		// console.log('newValue', newValue);
 
-		const newSubmittalsList = [ ...submittals, newValue ];
+		const newSubmittalsList = [ ...existing_submittals, new_submittal ];
 		// console.log('newSubmittalsList', newSubmittalsList);
 		axios.patch('/materials/' + id + '.json', { submittals: newSubmittalsList }).then((response) => {
 			axios.get('/materials.json').then((response) => {
@@ -162,13 +197,13 @@ class Materials extends Component {
 			});
 		});
 
-		const submittalMaterialList = newValue.submittalMaterialImpacted;
-		const submittal_id = newValue.submittal_id;
+		const submittalMaterialList = new_submittal.submittalMaterialImpacted;
+		const submittal_id = new_submittal.submittal_id;
 		const newMaterialValue = this.state.materials.filter((material) => material.material_id === id)[0];
-		const newMaterialsList2 = [ ...submittalMaterialList, newMaterialValue ];
+		const newMaterialList = [ ...submittalMaterialList, newMaterialValue ];
 		console.log(submittal_id);
 		axios
-			.patch('/submittals/' + submittal_id + '.json', { submittalMaterialImpacted: newMaterialsList2 })
+			.patch('/submittals/' + submittal_id + '.json', { submittalMaterialImpacted: newMaterialList })
 			.then((response) => {
 				axios.get('/submittals.json').then((response) => {
 					const submittals = response.data;

@@ -6,7 +6,7 @@ import 'react-dropdown/style.css';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Select from 'react-select';
+// import Select from 'react-select';
 
 // material component to display a single row in the material table
 const material = (props) => {
@@ -41,7 +41,7 @@ const material = (props) => {
 			</td>
 			<td>
 				<input
-					onChange={(event) => props.change(event, props.material_id, 'item')}
+					onChange={(event) => props.change(event, props.material_id, 'item', props.submittals)}
 					name={props.item}
 					value={props.item}
 					style={{ width: '150px' }}
@@ -51,7 +51,7 @@ const material = (props) => {
 				<input
 					value={props.specSection}
 					style={{ width: '150px' }}
-					onChange={(event) => props.change(event, props.material_id, 'specSection')}
+					onChange={(event) => props.change(event, props.material_id, 'specSection', props.submittals)}
 					name={props.specSection}
 				/>
 			</td>
@@ -59,7 +59,8 @@ const material = (props) => {
 				<input
 					value={props.responsibleSubcontractor}
 					style={{ width: '150px' }}
-					onChange={(event) => props.change(event, props.material_id, 'responsibleSubcontractor')}
+					onChange={(event) =>
+						props.change(event, props.material_id, 'responsibleSubcontractor', props.submittals)}
 					name={props.responsibleSubcontractor}
 				/>
 			</td>
@@ -89,7 +90,8 @@ const material = (props) => {
 					type="date"
 					value={props.anticipatedReleaseDate}
 					style={{ width: '150px' }}
-					onChange={(event) => props.change(event, props.material_id, 'anticipatedReleaseDate')}
+					onChange={(event) =>
+						props.change(event, props.material_id, 'anticipatedReleaseDate', props.submittals)}
 					name={props.anticipatedReleaseDate}
 				/>
 			</td>
@@ -98,7 +100,7 @@ const material = (props) => {
 					type="date"
 					value={props.actualReleaseDate}
 					style={{ width: '150px' }}
-					onChange={(event) => props.change(event, props.material_id, 'actualReleaseDate')}
+					onChange={(event) => props.change(event, props.material_id, 'actualReleaseDate', props.submittals)}
 					name={props.actualReleaseDate}
 				/>
 			</td>
@@ -106,7 +108,7 @@ const material = (props) => {
 				<input
 					value={props.buyoutVariance}
 					style={{ width: '150px' }}
-					onChange={(event) => props.change(event, props.material_id, 'buyoutVariance')}
+					onChange={(event) => props.change(event, props.material_id, 'buyoutVariance', props.submittals)}
 					name={props.buyoutVariance}
 				/>
 			</td>
@@ -114,7 +116,7 @@ const material = (props) => {
 				<input
 					value={props.submittalPrepTime}
 					style={{ width: '150px' }}
-					onChange={(event) => props.change(event, props.material_id, 'submittalPrepTime')}
+					onChange={(event) => props.change(event, props.material_id, 'submittalPrepTime', props.submittals)}
 					name={props.submittalPrepTime}
 				/>
 			</td>
@@ -123,7 +125,8 @@ const material = (props) => {
 					type="date"
 					value={props.requiredSubmissionDate}
 					style={{ width: '150px' }}
-					onChange={(event) => props.change(event, props.material_id, 'requiredSubmissionDate')}
+					onChange={(event) =>
+						props.change(event, props.material_id, 'requiredSubmissionDate', props.submittals)}
 					name={props.requiredSubmissionDate}
 				/>
 			</td>
@@ -132,7 +135,7 @@ const material = (props) => {
 					type="date"
 					value={props.requestedSubmittal}
 					style={{ width: '150px' }}
-					onChange={(event) => props.change(event, props.material_id, 'requestedSubmittal')}
+					onChange={(event) => props.change(event, props.material_id, 'requestedSubmittal', props.submittals)}
 					name={props.requestedSubmittal}
 				/>
 			</td>
@@ -141,7 +144,8 @@ const material = (props) => {
 					type="date"
 					value={props.ancitipcatedSubmissionDate}
 					style={{ width: '150px' }}
-					onChange={(event) => props.change(event, props.material_id, 'ancitipcatedSubmissionDate')}
+					onChange={(event) =>
+						props.change(event, props.material_id, 'ancitipcatedSubmissionDate', props.submittals)}
 					name={props.ancitipcatedSubmissionDate}
 				/>
 			</td>
@@ -150,7 +154,8 @@ const material = (props) => {
 					type="date"
 					value={props.actualSubmissionDate}
 					style={{ width: '150px' }}
-					onChange={(event) => props.change(event, props.material_id, 'actualSubmissionDate')}
+					onChange={(event) =>
+						props.change(event, props.material_id, 'actualSubmissionDate', props.submittals)}
 					name={props.actualSubmissionDate}
 				/>
 			</td>
@@ -158,7 +163,7 @@ const material = (props) => {
 				<input
 					value={props.submittalVariance}
 					style={{ width: '150px' }}
-					onChange={(event) => props.change(event, props.material_id, 'submittalVariance')}
+					onChange={(event) => props.change(event, props.material_id, 'submittalVariance', props.submittals)}
 					name={props.submittalVariance}
 				/>
 			</td>
@@ -166,7 +171,7 @@ const material = (props) => {
 				<input
 					value={props.approvalTime}
 					style={{ width: '150px' }}
-					onChange={(event) => props.change(event, props.material_id, 'approvalTime')}
+					onChange={(event) => props.change(event, props.material_id, 'approvalTime', props.submittals)}
 					name={props.approvalTime}
 				/>
 			</td>
@@ -175,7 +180,8 @@ const material = (props) => {
 					type="date"
 					value={props.requiredApprovalDate}
 					style={{ width: '150px' }}
-					onChange={(event) => props.change(event, props.material_id, 'requiredApprovalDate')}
+					onChange={(event) =>
+						props.change(event, props.material_id, 'requiredApprovalDate', props.submittals)}
 					name={props.requiredApprovalDate}
 				/>
 			</td>
@@ -183,7 +189,8 @@ const material = (props) => {
 				<input
 					value={props.anticipatedApprovalDate}
 					style={{ width: '150px' }}
-					onChange={(event) => props.change(event, props.material_id, 'anticipatedApprovalDate')}
+					onChange={(event) =>
+						props.change(event, props.material_id, 'anticipatedApprovalDate', props.submittals)}
 					name={props.anticipatedApprovalDate}
 				/>
 			</td>
@@ -192,7 +199,7 @@ const material = (props) => {
 					type="date"
 					value={props.actualApprovalDate}
 					style={{ width: '150px' }}
-					onChange={(event) => props.change(event, props.material_id, 'actualApprovalDate')}
+					onChange={(event) => props.change(event, props.material_id, 'actualApprovalDate', props.submittals)}
 					name={props.actualApprovalDate}
 				/>
 			</td>
@@ -200,7 +207,7 @@ const material = (props) => {
 				<input
 					value={props.approvalVariance}
 					style={{ width: '150px' }}
-					onChange={(event) => props.change(event, props.material_id, 'approvalVariance')}
+					onChange={(event) => props.change(event, props.material_id, 'approvalVariance', props.submittals)}
 					name={props.approvalVariance}
 				/>
 			</td>
@@ -208,7 +215,7 @@ const material = (props) => {
 				<input
 					value={props.leadTime}
 					style={{ width: '150px' }}
-					onChange={(event) => props.change(event, props.material_id, 'leadTime')}
+					onChange={(event) => props.change(event, props.material_id, 'leadTime', props.submittals)}
 					name={props.leadTime}
 				/>
 			</td>
@@ -217,7 +224,7 @@ const material = (props) => {
 					type="date"
 					value={props.requiredOnSite}
 					style={{ width: '150px' }}
-					onChange={(event) => props.change(event, props.material_id, 'requiredOnSite')}
+					onChange={(event) => props.change(event, props.material_id, 'requiredOnSite', props.submittals)}
 					name={props.requiredOnSite}
 				/>
 			</td>
@@ -225,7 +232,8 @@ const material = (props) => {
 				<input
 					value={props.anticipatedDeliveryDate}
 					style={{ width: '150px' }}
-					onChange={(event) => props.change(event, props.material_id, 'anticipatedDeliveryDate')}
+					onChange={(event) =>
+						props.change(event, props.material_id, 'anticipatedDeliveryDate', props.submittals)}
 					name={props.anticipatedDeliveryDate}
 				/>
 			</td>
@@ -234,7 +242,8 @@ const material = (props) => {
 					type="date"
 					value={props.confirmedDeliveryDate}
 					style={{ width: '150px' }}
-					onChange={(event) => props.change(event, props.material_id, 'confirmedDeliveryDate')}
+					onChange={(event) =>
+						props.change(event, props.material_id, 'confirmedDeliveryDate', props.submittals)}
 					name={props.confirmedDeliveryDate}
 				/>
 			</td>
@@ -242,7 +251,8 @@ const material = (props) => {
 				<input
 					value={props.confirmedSubWarehouse}
 					style={{ width: '150px' }}
-					onChange={(event) => props.change(event, props.material_id, 'confirmedSubWarehouse')}
+					onChange={(event) =>
+						props.change(event, props.material_id, 'confirmedSubWarehouse', props.submittals)}
 					name={props.confirmedSubWarehouse}
 				/>
 			</td>
@@ -251,7 +261,7 @@ const material = (props) => {
 					type="date"
 					value={props.actualDeliveryDate}
 					style={{ width: '150px' }}
-					onChange={(event) => props.change(event, props.material_id, 'actualDeliveryDate')}
+					onChange={(event) => props.change(event, props.material_id, 'actualDeliveryDate', props.submittals)}
 					name={props.actualDeliveryDate}
 				/>
 			</td>
@@ -259,7 +269,7 @@ const material = (props) => {
 				<input
 					value={props.deliveryVariance}
 					style={{ width: '150px' }}
-					onChange={(event) => props.change(event, props.material_id, 'deliveryVariance')}
+					onChange={(event) => props.change(event, props.material_id, 'deliveryVariance', props.submittals)}
 					name={props.deliveryVariance}
 				/>
 			</td>
@@ -267,7 +277,7 @@ const material = (props) => {
 				<input
 					value={props.notes}
 					style={{ width: '150px' }}
-					onChange={(event) => props.change(event, props.material_id, 'Notes')}
+					onChange={(event) => props.change(event, props.material_id, 'Notes', props.submittals)}
 					name={props.notes}
 				/>
 			</td>

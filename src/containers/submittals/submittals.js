@@ -103,13 +103,13 @@ class Submittals extends Component {
 	};
 
 	// event handler to manage updates to table values
-	submittalChangeHandler = (event, id, val) => {
+	submittalChangeHandler = (event, id, attribute, existing_materials) => {
 		// save the event to a variable
 		const newValue = event.target.value;
 
 		// patch Db so the value in question for the material, denoted by ID, and attribute, denoted by val, is updated
 		// Then reset state so change is implemented on the page
-		axios.patch('/submittals/' + id + '.json', { [val]: newValue }).then((response) => {
+		axios.patch('/submittals/' + id + '.json', { [attribute]: newValue }).then((response) => {
 			axios.get('/submittals.json').then((response) => {
 				const submittals = response.data;
 				const submittalList = [];
@@ -122,12 +122,46 @@ class Submittals extends Component {
 				this.setState({ submittals: submittalList });
 			});
 		});
+		console.log('submittals', this.state.submittals);
+
+		if (this.state.submittals & existing_materials) {
+			console.log('submittals', this.state.submittals);
+			let newSubmittalValue = this.state.submittals.filter((submittal) => submittal.submittal_id === id)[0];
+			newSubmittalValue[attribute] = event.target.value;
+			console.log('newSubmittal', newSubmittalValue);
+			console.log('existing_materials', existing_materials);
+
+			existing_materials.forEach((material) => {
+				console.log(material);
+				const material_id = material.material_id;
+				const currentSubmittalList = material.submittals;
+				const filteredSubmittalList = currentSubmittalList.filter((submittal) => submittal.submittal_id === id);
+				const newSubmittalList = [ ...filteredSubmittalList, newSubmittalValue ];
+				console.log('newSubmittalList', newSubmittalList);
+
+				axios
+					.patch('/materials/' + material_id + '.json', { submittals: newSubmittalList })
+					.then((response) => {
+						axios.get('/materials.json').then((response) => {
+							const materials = response.data;
+							const materialList = [];
+							for (var key in materials) {
+								materials[key].material_id = key;
+								materials[key].key = key;
+								materialList.push(materials[key]);
+							}
+
+							this.setState({ materials: materialList });
+						});
+					});
+			});
+		}
 	};
 
-	materialFormSubmitHandler = (id, submittals, va) => {
+	materialFormSubmitHandler = (id, submittals, materialName) => {
 		console.log('submitting form');
-		console.log('va', va);
-		const newValue = this.state.materials.filter((materials) => materials.item === va)[0];
+		console.log('materialName', materialName);
+		const newValue = this.state.materials.filter((materials) => materials.item === materialName)[0];
 
 		console.log('newValue', newValue);
 

@@ -5,7 +5,7 @@ import 'react-dropdown/style.css';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Select from 'react-select';
+// import Select from 'react-select';
 // submittal component to display a single row in the submittal table
 
 const submittal = (props) => {
@@ -34,7 +34,8 @@ const submittal = (props) => {
 			</td>
 			<td>
 				<input
-					onChange={(event) => props.change(event, props.submittal_id, 'submittalTitle')}
+					onChange={(event) =>
+						props.change(event, props.submittal_id, 'submittalTitle', props.submittalMaterialImpacted)}
 					name={props.submittalTitle}
 					value={props.submittalTitle}
 					style={{ width: '150px' }}
@@ -44,7 +45,8 @@ const submittal = (props) => {
 				<input
 					value={props.specSection}
 					style={{ width: '150px' }}
-					onChange={(event) => props.change(event, props.submittal_id, 'specSection')}
+					onChange={(event) =>
+						props.change(event, props.submittal_id, 'specSection', props.submittalMaterialImpacted)}
 					name={props.specSection}
 				/>
 			</td>
@@ -52,7 +54,13 @@ const submittal = (props) => {
 				<input
 					value={props.specSectionDescription}
 					style={{ width: '150px' }}
-					onChange={(event) => props.change(event, props.submittal_id, 'specSectionDescription')}
+					onChange={(event) =>
+						props.change(
+							event,
+							props.submittal_id,
+							'specSectionDescription',
+							props.submittalMaterialImpacted
+						)}
 					name={props.specSectionDescription}
 				/>
 			</td>
@@ -61,7 +69,8 @@ const submittal = (props) => {
 				<input
 					value={props.submittalNumber}
 					style={{ width: '150px' }}
-					onChange={(event) => props.change(event, props.submittal_id, 'submittalNumber')}
+					onChange={(event) =>
+						props.change(event, props.submittal_id, 'submittalNumber', props.submittalMaterialImpacted)}
 					name={props.submittalNumber}
 				/>
 			</td>
@@ -69,7 +78,13 @@ const submittal = (props) => {
 				<input
 					value={props.submittalDescription}
 					style={{ width: '150px' }}
-					onChange={(event) => props.change(event, props.submittal_id, 'submittalDescription')}
+					onChange={(event) =>
+						props.change(
+							event,
+							props.submittal_id,
+							'submittalDescription',
+							props.submittalMaterialImpacted
+						)}
 					name={props.submittalDescription}
 				/>
 			</td>
@@ -98,7 +113,13 @@ const submittal = (props) => {
 				<input
 					value={props.submittalResponsibleContractor}
 					style={{ width: '150px' }}
-					onChange={(event) => props.change(event, props.submittal_id, 'submittalResponsibleContractor')}
+					onChange={(event) =>
+						props.change(
+							event,
+							props.submittal_id,
+							'submittalResponsibleContractor',
+							props.submittalMaterialImpacted
+						)}
 					name={props.submittalResponsibleContractor}
 				/>
 			</td>
@@ -106,7 +127,8 @@ const submittal = (props) => {
 				<input
 					value={props.submittalManager}
 					style={{ width: '150px' }}
-					onChange={(event) => props.change(event, props.submittal_id, 'submittalManager')}
+					onChange={(event) =>
+						props.change(event, props.submittal_id, 'submittalManager', props.submittalMaterialImpacted)}
 					name={props.submittalManager}
 				/>
 			</td>
@@ -114,7 +136,8 @@ const submittal = (props) => {
 				<input
 					value={props.submittalStatus}
 					style={{ width: '150px' }}
-					onChange={(event) => props.change(event, props.submittal_id, 'submittalStatus')}
+					onChange={(event) =>
+						props.change(event, props.submittal_id, 'submittalStatus', props.submittalMaterialImpacted)}
 					name={props.submittalStatus}
 				/>
 			</td>
@@ -122,7 +145,8 @@ const submittal = (props) => {
 				<input
 					value={props.submittalType}
 					style={{ width: '150px' }}
-					onChange={(event) => props.change(event, props.submittal_id, 'submittalType')}
+					onChange={(event) =>
+						props.change(event, props.submittal_id, 'submittalType', props.submittalMaterialImpacted)}
 					name={props.submittalType}
 				/>
 			</td>
@@ -130,7 +154,8 @@ const submittal = (props) => {
 				<input
 					value={props.submittalLocation}
 					style={{ width: '150px' }}
-					onChange={(event) => props.change(event, props.submittal_id, 'submittalLocation')}
+					onChange={(event) =>
+						props.change(event, props.submittal_id, 'submittalLocation', props.submittalMaterialImpacted)}
 					name={props.submittalLocation}
 				/>
 			</td>
@@ -139,7 +164,13 @@ const submittal = (props) => {
 					type="date"
 					value={props.submittalReceivedDate}
 					style={{ width: '150px' }}
-					onChange={(event) => props.change(event, props.submittal_id, 'submittalReceivedDate')}
+					onChange={(event) =>
+						props.change(
+							event,
+							props.submittal_id,
+							'submittalReceivedDate',
+							props.submittalMaterialImpacted
+						)}
 					name={props.submittalReceivedDate}
 				/>
 			</td>
@@ -148,7 +179,8 @@ const submittal = (props) => {
 					type="date"
 					value={props.submittalIssuedDate}
 					style={{ width: '150px' }}
-					onChange={(event) => props.change(event, props.submittal_id, 'submittalIssuedDate')}
+					onChange={(event) =>
+						props.change(event, props.submittal_id, 'submittalIssuedDate', props.submittalMaterialImpacted)}
 					name={props.submittalIssuedDate}
 				/>
 			</td>
@@ -157,7 +189,13 @@ const submittal = (props) => {
 					type="date"
 					value={props.submittalSubmitByDate}
 					style={{ width: '150px' }}
-					onChange={(event) => props.change(event, props.submittal_id, 'submittalSubmitByDate')}
+					onChange={(event) =>
+						props.change(
+							event,
+							props.submittal_id,
+							'submittalSubmitByDate',
+							props.submittalMaterialImpacted
+						)}
 					name={props.submittalSubmitByDate}
 				/>
 			</td>
@@ -166,7 +204,13 @@ const submittal = (props) => {
 					type="date"
 					value={props.submittalRequiredOnSiteDate}
 					style={{ width: '150px' }}
-					onChange={(event) => props.change(event, props.submittal_id, 'submittalRequiredOnSiteDate')}
+					onChange={(event) =>
+						props.change(
+							event,
+							props.submittal_id,
+							'submittalRequiredOnSiteDate',
+							props.submittalMaterialImpacted
+						)}
 					name={props.submittalRequiredOnSiteDate}
 				/>
 			</td>
@@ -174,7 +218,8 @@ const submittal = (props) => {
 				<input
 					value={props.submittalLeadTime}
 					style={{ width: '150px' }}
-					onChange={(event) => props.change(event, props.submittal_id, 'submittalLeadTime')}
+					onChange={(event) =>
+						props.change(event, props.submittal_id, 'submittalLeadTime', props.submittalMaterialImpacted)}
 					name={props.submittalLeadTime}
 				/>
 			</td>
@@ -182,7 +227,13 @@ const submittal = (props) => {
 				<input
 					value={props.submittalDesignReviewTime}
 					style={{ width: '150px' }}
-					onChange={(event) => props.change(event, props.submittal_id, 'submittalDesignReviewTime')}
+					onChange={(event) =>
+						props.change(
+							event,
+							props.submittal_id,
+							'submittalDesignReviewTime',
+							props.submittalMaterialImpacted
+						)}
 					name={props.submittalDesignReviewTime}
 				/>
 			</td>
@@ -190,7 +241,13 @@ const submittal = (props) => {
 				<input
 					value={props.submittalInternalReviewTime}
 					style={{ width: '150px' }}
-					onChange={(event) => props.change(event, props.submittal_id, 'submittalInternalReviewTime')}
+					onChange={(event) =>
+						props.change(
+							event,
+							props.submittal_id,
+							'submittalInternalReviewTime',
+							props.submittalMaterialImpacted
+						)}
 					name={props.submittalInternalReviewTime}
 				/>
 			</td>
@@ -198,7 +255,8 @@ const submittal = (props) => {
 				<input
 					value={props.submittalNotes}
 					style={{ width: '150px' }}
-					onChange={(event) => props.change(event, props.submittal_id, 'submittalNotes')}
+					onChange={(event) =>
+						props.change(event, props.submittal_id, 'submittalNotes', props.submittalMaterialImpacted)}
 					name={props.submittalNotes}
 				/>
 			</td>
