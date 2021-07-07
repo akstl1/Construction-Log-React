@@ -25,6 +25,7 @@ class Submittals extends Component {
 			for (var key in submittals) {
 				submittals[key].submittal_id = key;
 				submittals[key].key = key;
+				axios.patch('/submittals/' + key + '.json', { submittal_id: key }).then((response) => {});
 				submittalList.push(submittals[key]);
 			}
 			// update value of materials state so all new IDs are included
@@ -106,7 +107,7 @@ class Submittals extends Component {
 	submittalChangeHandler = (event, id, attribute, existing_materials) => {
 		// save the event to a variable
 		const newValue = event.target.value;
-
+		console.log(newValue);
 		// patch Db so the value in question for the material, denoted by ID, and attribute, denoted by val, is updated
 		// Then reset state so change is implemented on the page
 		axios.patch('/submittals/' + id + '.json', { [attribute]: newValue }).then((response) => {
@@ -123,16 +124,17 @@ class Submittals extends Component {
 			});
 		});
 		console.log('submittals', this.state.submittals);
-
-		if (this.state.submittals & existing_materials) {
-			console.log('submittals', this.state.submittals);
+		console.log('ex', existing_materials);
+		console.log(this.state.submittals & existing_materials);
+		if (this.state.submittals && existing_materials) {
+			console.log('submittals2', this.state.submittals);
 			let newSubmittalValue = this.state.submittals.filter((submittal) => submittal.submittal_id === id)[0];
 			newSubmittalValue[attribute] = event.target.value;
 			console.log('newSubmittal', newSubmittalValue);
 			console.log('existing_materials', existing_materials);
 
-			existing_materials.forEach((material) => {
-				console.log(material);
+			existing_materials.slice(1).forEach((material) => {
+				console.log('material', material);
 				const material_id = material.material_id;
 				const currentSubmittalList = material.submittals;
 				const filteredSubmittalList = currentSubmittalList.filter((submittal) => submittal.submittal_id === id);
@@ -208,7 +210,7 @@ class Submittals extends Component {
 		const Submittal_list = this.state.submittals.map((submittal) => {
 			return (
 				<Submittal
-					key={submittal.submittal_id}
+					key={submittal.key}
 					submittal_id={submittal.submittal_id}
 					submittalTitle={submittal.submittalTitle}
 					specSection={submittal.specSection}

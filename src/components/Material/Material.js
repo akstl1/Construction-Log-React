@@ -1,8 +1,6 @@
 import React from 'react';
 import classes from './Material.module.css';
 import SubmittalTie from '../SubmittalTie/SubmittalTie';
-// import Dropdown from 'react-dropdown';
-import 'react-dropdown/style.css';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown';
 import 'bootstrap/dist/css/bootstrap.min.css';

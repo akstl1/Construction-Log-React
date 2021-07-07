@@ -1,7 +1,6 @@
 import React from 'react';
 import classes from './Submittal.module.css';
 import SubmittalTie from '../SubmittalTie/SubmittalTie';
-import 'react-dropdown/style.css';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -99,7 +98,7 @@ const submittal = (props) => {
 				>
 					{submittalFormList.length ? (
 						submittalFormList.map((material) => (
-							<Dropdown.Item key={material.key} eventKey={material.item}>
+							<Dropdown.Item key={material.material_id} eventKey={material.item}>
 								{material.item}
 							</Dropdown.Item>
 						))
@@ -107,7 +106,7 @@ const submittal = (props) => {
 						<p>Default</p>
 					)}
 				</DropdownButton>
-				{materialList.map((material) => <SubmittalTie key={material.key} value={material.item} />)}
+				{materialList.map((material) => <SubmittalTie key={material.material_id} value={material.item} />)}
 			</td>
 			<td>
 				<input
@@ -116,7 +115,7 @@ const submittal = (props) => {
 					onChange={(event) =>
 						props.change(
 							event,
-							props.submittal_id,
+							props.key,
 							'submittalResponsibleContractor',
 							props.submittalMaterialImpacted
 						)}
@@ -256,7 +255,7 @@ const submittal = (props) => {
 					value={props.submittalNotes}
 					style={{ width: '150px' }}
 					onChange={(event) =>
-						props.change(event, props.submittal_id, 'submittalNotes', props.submittalMaterialImpacted)}
+						props.change(event, props.ksubmittal_idey, 'submittalNotes', props.submittalMaterialImpacted)}
 					name={props.submittalNotes}
 				/>
 			</td>

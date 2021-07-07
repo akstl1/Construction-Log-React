@@ -28,9 +28,13 @@ class Materials extends Component {
 			const materials = response.data;
 			const materialList = [];
 			for (var key in materials) {
+				console.log(key);
+				// console.log('object', Object.values(materials));
+				// const thisMaterial = materials.filter((material) => material.material_id !== id)
 				materials[key].material_id = key;
 				materials[key].key = key;
 				materialList.push(materials[key]);
+				axios.patch('/materials/' + key + '.json', { material_id: key }).then((response) => {});
 			}
 			// update value of materials state so all new IDs are included
 			this.setState({ materials: materialList });
@@ -119,6 +123,7 @@ class Materials extends Component {
 
 	// event handler to manage updates to table values
 	materialChangeHandler = (event, id, attribute, existing_submittals) => {
+		console.log('ex_ss', existing_submittals);
 		// save the event to a variable
 		const newValue = event.target.value;
 		console.log('newValue', newValue);
@@ -139,14 +144,16 @@ class Materials extends Component {
 		});
 		// let existing_submittal2 = existing_submittals[1:]
 		console.log('materials', this.state.materials);
-		if (this.state.materials & existing_submittals) {
+		console.log('ex_sss', existing_submittals);
+		if (this.state.materials && existing_submittals) {
 			console.log('materials', this.state.materials);
 			let newMaterialValue = this.state.materials.filter((material) => material.material_id === id)[0];
 			newMaterialValue[attribute] = event.target.value;
 			console.log('newMaterial', newMaterialValue);
+			console.log('ex_s', existing_submittals);
 
 			existing_submittals.slice(1).forEach((submittal) => {
-				console.log(submittal);
+				console.log('submittal', submittal);
 				const submittal_id = submittal.submittal_id;
 				const currentMaterialList = submittal.submittalMaterialImpacted;
 				const filteredMaterialList = currentMaterialList.filter((material) => material.material_id === id);
